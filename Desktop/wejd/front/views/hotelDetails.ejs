@@ -63,7 +63,16 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/">Home</a></li>
-                       <li ng-if="connectedUser != null || connectedUser != undefined"><a href="#">{{connectedUser.email}}</a></li>
+                   <li  class=""><a href="/list">Book</a></li>
+                        <li ng-if="connectedUser.email == null  || connectedUser == undefined"><a href="/login">Log In</a></li>
+							  <li class="dropdown" ng-if="connectedUser != null || connectedUser != undefined">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{connectedUser.email}} <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+								<li><a href='/profile'>Profile</a></li>
+									<li><a ng-click='logout()'>Log Out</a></li>
+								
+								</ul>
+							</li>
 
 
 
@@ -94,8 +103,8 @@
 </div>
 
 
-<div class="mg-single-room-price" ng-click="showHotelRooms(hotel) " onmousever="" style="cursor: pointer">
-	<div class="mg-srp-inner">Show Rooms<sup></sup><span>Click here</span></div>
+<div class="mg-single-room-price" ng-click="showHotelRooms(hotel) " onmousever="" style="cursor: pointer" >
+	<div class="mg-srp-inner">Show  Rooms <sup></sup><span>Click here</span></div>
 				
 <!--</div>-->
 </br>
@@ -144,13 +153,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mg-single-room-txt">
-                <h2 class="mg-sec-left-title">hotel Description</h2>
+                <h2 class="mg-sec-left-title">hotel Description ( <a ng-click="showHotelRooms(hotel) ">Click Here To Show Hotel Rooms</a> )</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fecerint persecuti praeterea mentitum minime mediocriterne intellegerem certa pariendarum frustra, quidque ipsis praeter minima, iuste posse perspici dividendo videtisne, aperiri exercitus. Ille vivamus philosophis approbantibus mundus suum probes vivatur. Existimo augeri omnium ego aiunt remotis, dissentias graecam improbe diceretur, intus vitae saluti plerumque quot postulet partiendo facimus desperantes. Albucius arbitrarer animadversionis flagitem explentur posse consequi iactare legendus cogitemus, maximasque difficiles, utraque grate viris ipsi divelli expedire meliore libenter dolendum, bonae maximis hinc.</p>
             </div>
         </div>
     </div>
     <div class="row" ng-cloak>
         <div class="col-md-12 mg-saerch-room pb70">
+        <h2 class="mg-sec-left-title">hotel location</h2>
             <div class="mg-book-now">
                 <div class="row">
                     <div id="map" name="map"  class="gmap" style="height: 350px; position: relative; overflow: hidden;">
@@ -162,7 +172,7 @@
 
 </div>
 </div>
-<div class="mg-rooms-cols">
+<!--<div class="mg-rooms-cols">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -179,7 +189,7 @@
                         <h2 ng-repeat="type in typeList" ng-if="room.roomTypeId == type.id">{{type.type}}</h2>
                         <div class="mg-room-rating"><i class="fa fa-star"></i> 5.00</div>
                         <div class="mg-room-price">$249<sup>.99/Night</sup></div>
-<!--                         <a href="#" class="btn btn-link">View Details <i class="fa fa-angle-double-right"></i></a> -->
+
                         <a href="#" class="btn btn-main">Book</a>
                     </figcaption>
 
@@ -189,7 +199,7 @@
         </div>
     </div>
     </div>
-</div>
+</div>-->
     <footer class="mg-footer">
         <div class="mg-footer-widget">
             <div class="container">

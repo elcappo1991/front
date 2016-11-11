@@ -15,12 +15,27 @@ myApp.factory('connectedUser',function($window) {
 
 
 myApp.controller('APPController', function($scope,$http,$window,ipaddress,connectedUser) {
-  $scope.connectedUser= connectedUser.value;
+  
+  
+
+  console.log('*****************************************************************************');
+  console.log('**//\\\\***\\\\****//*||---*****//\\\\****//\\\\****||_))**//\\\\****||---**||---******');
+  console.log('*//__\\\\***\\\\--//**||___****//**\\\\**//**\\\\***||****//__\\\\***||   **||____*****');
+  console.log('//****\\\\***\\\\//***||___***//****\\\\//****\\\\**||***//****\\\\**||___**||_____****');
+  console.log('******************************************************************************');
+
+  
+  
+  
+  
+  
+  
+  
+    $scope.connectedUser= connectedUser.value;
  
 
     console.log('APPController');
-//     $window.localStorage.removeItem('hotel')
-
+    //     $window.localStorage.removeItem('hotel')
 
 
     $http.get(ipaddress.value+'/account/getListHotel').then(function(hotel){
@@ -29,7 +44,7 @@ myApp.controller('APPController', function($scope,$http,$window,ipaddress,connec
 
     });
 
-$scope.search=function(){
+    $scope.search=function(){
 
 
     var start_date=document.getElementById('start_date').value;
@@ -56,11 +71,10 @@ $scope.search=function(){
         $('#listRoom').show();
 
     })
-}
+    }
 
 
-
-$scope.changeImage= function(hotel){
+    $scope.changeImage= function(hotel){
 
     var url = hotel.picture_url;
 
@@ -70,20 +84,19 @@ $scope.changeImage= function(hotel){
     var ThirdPartOfCode='/'+url.slice(url.lastIndexOf('upload')+7,url.length)
 
     document.getElementById('image'+hotel.id).setAttribute("src",firstCode+SecondPartOfCode+ThirdPartOfCode)
-}
+    }
 
 
-
-$scope.cancelImageChange= function(hotel){
+    $scope.cancelImageChange= function(hotel){
 
 
 
     document.getElementById('image'+hotel.id).setAttribute("src",hotel.picture_url)
 
-}
+    }
 
 
-$scope.changeRoomImage= function(room){
+    $scope.changeRoomImage= function(room){
 
     var url = room.picture_url;
 
@@ -93,51 +106,52 @@ $scope.changeRoomImage= function(room){
     var ThirdPartOfCode='/'+url.slice(url.lastIndexOf('upload')+7,url.length)
 
     document.getElementById('room'+room.id).setAttribute("src",firstCode+SecondPartOfCode+ThirdPartOfCode)
-}
+    }
 
 
-
-$scope.cancelRoomImageChange= function(room){
+    $scope.cancelRoomImageChange= function(room){
 
 
 
     document.getElementById('room'+room.id).setAttribute("src",room.picture_url)
 
-}
-
-
-
-
-
-
-
+    }
 
 
     $scope.showHotelRooms=function(hotel){
+      
       $window.localStorage.setItem('hotel',JSON.stringify(hotel))
             console.log("click showHotelRooms function")
         
         setTimeout(function(){$window.location.href="/list"},400)
     }
+    
     $scope.showHotelDetails=function(hotel){
       $window.localStorage.setItem('hotel',JSON.stringify(hotel))
             console.log("click showHotelDetail function")
         
         setTimeout(function(){$window.location.href="/hotelDetails"},400)
     }
-
-
+    
+    
+	  $scope.logout=function(){
+	    
+	    $window.sessionStorage.setItem('user',null)
+	     $scope.connectedUser= JSON.parse($window.sessionStorage.getItem('user'))
+	  }
+    
+  
 });
 
 
 
 
 myApp.controller('APPController1', function($scope,$http,$window,ipaddress,connectedUser) {
-  $scope.connectedUser= connectedUser.value;
+	$scope.connectedUser= connectedUser.value;
 
         $scope.hotel=JSON.parse($window.localStorage.getItem('hotel'));
 
-            console.log($scope.hotel)
+	console.log($scope.hotel)
 
 
 	var parameters = {
@@ -158,7 +172,7 @@ myApp.controller('APPController1', function($scope,$http,$window,ipaddress,conne
         $scope.typeList=res.data;
         console.log($scope.typeList)
     });
-  /*  $http.get('http://192.168.1.17:4000/account/optionListByIdHotel',config).then(function(res){
+	/*  $http.get('http://192.168.1.17:4000/account/optionListByIdHotel',config).then(function(res){
             console.log(res.data)
         $scope.optionList=res.data;
     });*/
@@ -243,6 +257,7 @@ myApp.controller('APPController1', function($scope,$http,$window,ipaddress,conne
     $scope.selectedRoom=room;
     $scope.nb=[];
     for(i =1;i<parseInt(room.bed_number);i++){
+      
      $scope.nb.push(i); 
     }
   console.log('section infrtomation');
@@ -279,12 +294,22 @@ myApp.controller('APPController1', function($scope,$http,$window,ipaddress,conne
 
 
 
-	 $scope.goTo3 = function(){
+	$scope.goTo3 = function(){
    
+	  console.log(" copanion number"+ $scope.nb)
    $scope.selectedReservationOption=document.getElementById('reservationOptionSelect').options[document.getElementById('reservationOptionSelect').selectedIndex].value;
-   $scope.companion = document.getElementById('companion').options[document.getElementById('companion').selectedIndex].value;
-   if(!$scope.companion || $scope.companion =="undefined" || $scope.companion == null){ $scope.companion =1;}
-    else { $scope.companion =parseInt($scope.companion)+1;}
+   $scope.companion = document.getElementById('companionNumber').options[document.getElementById('companionNumber').selectedIndex].value;
+   if(!$scope.companion || $scope.companion =="undefined" || $scope.companion == null){ 
+     console.log("num companion "+$scope.companion)
+     $scope.companion =1;
+     
+  }
+    else { 
+      console.log("selected companion num"+$scope.companion);
+      $scope.companion =parseInt($scope.companion)+1;
+      
+    }
+    
       var start_date=document.getElementById('start_date1').value;
        
    if(start_date == 'undefined' || !start_date){
@@ -337,49 +362,84 @@ myApp.controller('APPController1', function($scope,$http,$window,ipaddress,conne
       
       
    
-         $http.post(ipaddress.value+'/login',credential,{headers:{'content-Type':'application/x-www-form-urlencoded'}}).then(function(data){	   
+         $http.post(ipaddress.value+'/login',credential,{headers:{'content-Type':'application/x-www-form-urlencoded'}}).then(function(data){
+	      console.log(data)
 	      console.log(JSON.stringify(data.data))
 	   $window.sessionStorage.setItem('user',JSON.stringify(data.data))
+	   if(data.data.id){
+			  $scope.connectedUser= JSON.parse($window.sessionStorage.getItem('user'))
+			  $('#myModal').modal('hide')
+			  console.log( $scope.connectedUser);
+			  $scope.sendAddNewBookingRequest();
+			  console.log('section 3');
+			  $scope.showThankYouDiv();
+	  }
 	   
-	});
-// 	  charset=UTF-8
-	
-// 	 $http({method:'POST', url:'http://192.168.1.20:4000/login', data: credential,cache:false ,headers: {'content-Type':undefined}}).then(function(data){	   
-//       console.log(data)
-// 	   
-// 	});
-       
-      
-    }
+	  });
+
+	  }
+	  
+	  
+	  $scope.logout=function(){
+	    
+	    $window.sessionStorage.setItem('user',null)
+	     $scope.connectedUser= JSON.parse($window.sessionStorage.getItem('user'))
+	  }
     
     
 	$scope.goTo4 = function(){
   if( $scope.connectedUser == "undefined" ||  $scope.connectedUser == null ||  $scope.connectedUser == ""){
   
-  $('#myModal').modal('show')}
+  $('#myModal').modal('show')
+    
+  }
   else 
   {
     
     console.log( $scope.connectedUser);
-  
+  $scope.sendAddNewBookingRequest();
+    $scope.showThankYouDiv()
    console.log('section 3');
-    document.getElementById('confirm').removeAttribute('class','active')
+   
+  
+    }
+  
+	}
+	
+	
+	$scope.showThankYouDiv =function(){
+  
+   document.getElementById('confirm').removeAttribute('class','active')
      document.getElementById('confirm').setAttribute('class','mg-step-done tab-pane fade  in');;
    document.getElementById('thank-you').setAttribute('class','active');
     document.getElementById('lthank').setAttribute('class','active');
     
     document.getElementById('lconfirm').setAttribute('class','mg-step-done');
   
-    }
   
 	}
 
+	$scope.sendAddNewBookingRequest=function(){
+ 
+   console.log( $scope.connectedUser);
+			    var reservation={}
+			    reservation.start_date=$scope.start_date1;
+			    reservation.end_date=$scope.end_date1;
+			    reservation.hotelId=$scope.selectedRoom.hotelId;
+			    reservation.reservation_option=$scope.selectedReservationOption;
+			    reservation.companion_nb=$scope.companion;
+			    reservation.accountId=$scope.connectedUser.id;
+			    reservation.type_room=document.getElementById('typeRoomBooked').innerHTML;
+			    reservation.option=$scope.selectedReservationOption;
+			    console.log(reservation);
+			     $http.post(ipaddress.value+'/account/addNewReservation',reservation,{headers:{'content-Type':'application/x-www-form-urlencoded'}}).then(function(data){console.log(data)
+			       
+			       $scope.reservationShuffleReference=data.data.ref;
+			    });
+	}
 
 
 });
-
-
-
 
 
 
@@ -443,12 +503,157 @@ myApp.controller('APPController2', function($scope,$http,$window,ipaddress,conne
     }
 
 
+	  $scope.logout=function(){
+	    
+	    $window.sessionStorage.setItem('user',null)
+	     $scope.connectedUser= JSON.parse($window.sessionStorage.getItem('user'))
+	  }
+    
 
 
 });
 
 
+myApp.controller('login',function($scope,$http,$window,ipaddress,connectedUser){
+  
+  
+  $scope.connectedUser=connectedUser.value;
+  
+  $scope.register=function(){
+    
+    var user={
+   'register-firstname':document.getElementById('register-firstname').value,
+    'register-lastname':document.getElementById('register-lastname').value,
+    'register-email':document.getElementById('register-email').value,
+    'register-password':document.getElementById('register-password').value
+    
+    };
+   
+         $http.post(ipaddress.value+'/account/registerNewAccount',user,{headers:{'content-Type':'application/x-www-form-urlencoded'}}).then(function(data){
+	   
+	   console.log(data)
+	   if(data.data=="succes" ){
+	     
+	     document.getElementById('registerForm').reset();
+	     $('#notifsucces').show();
+	     
+	  }else{
+	        document.getElementById('registerForm').reset();
+	      $('#notifEchec').show();
+	  }
+	 });
+    
+  }
+  
+ 
+ 	$scope.login=function(){
+         console.log("function clicked");
+	  var email = document.getElementById('login-email').value;
+	var password = document.getElementById('login-password').value;
+      
+       console.log("login sent ");
+     var credential={};
+ 	credential.email= email
+	credential.password= password
+  
+     
+      
+      
+   
+         $http.post(ipaddress.value+'/login',credential,{headers:{'content-Type':'application/x-www-form-urlencoded'}}).then(function(data){
+	     
+	   $window.sessionStorage.setItem('user',JSON.stringify(data.data))
+	   if(data.data.id){
+			  $scope.connectedUser= JSON.parse($window.sessionStorage.getItem('user'))
+			  $('#notifsucceslog').show();
+			document.getElementById('loginForm').reset();
+			 
+			  
+			  
+			  setTimeout(function(){
+			    console.log('redirection');
+			    $window.location.href='/'
+			    
+			  },900);
+	  }else {
+	    
+	    $('#notifEcheclog').show();
+	    document.getElementById('loginForm').reset();
+	  }
+	   
+	  });
 
+	  }
+    
+	  $scope.logout=function(){
+	    
+	    $window.sessionStorage.setItem('user',null)
+	     $scope.connectedUser= JSON.parse($window.sessionStorage.getItem('user'))
+	  }
+    
+  
+})
+
+
+
+
+myApp.controller('profile',function($scope,$http,$window,ipaddress,connectedUser){
+  
+  
+  $scope.connectedUser=connectedUser.value;
+
+  $scope.changePassword=function(){
+    var user={};
+    user.id= $scope.connectedUser.id;
+    user.oldpassword = document.getElementById('oldpassword').value;
+    user.newpassword= document.getElementById('newpassword').value;
+    
+    
+    $http.post(ipaddress.value+'/account/changeNewpassword',user,{headers:{'content-Type':'application/x-www-form-urlencoded'}}).then(function(data){
+	console.log(data)
+   if(data.data=="success" ){
+	     
+	     document.getElementById('chpass').reset();
+	     $('#notifsucceslog').show();
+	     
+	  }else{
+	        document.getElementById('chpass').reset();
+	      $('#notifEcheclog').show();
+	  }
+	 });
+      
+    
+    
+  }
+  
+  
+  $scope.showReservation=function(){
+    var user={};
+    user.id= $scope.connectedUser.id;
+    $http.get(ipaddress.value+'/account/getListReservationByIdUserConnected',{headers:{'content-Type':'application/x-www-form-urlencoded'},params: user}).then(function(data){
+      
+      
+      $scope.listReservation=data.data
+     
+    })
+    
+    
+    
+    
+    
+    
+    
+  }
+    
+  
+  
+  
+    $http.get(ipaddress.value+'/account/getListHotel').then(function(hotel){
+        console.log(hotel)
+        $scope.hotels=hotel.data;
+
+    });
+})
 myApp.controller('details', function($scope,$http,$window) {
 
     $scope.reservation= JSON.parse($window.localStorage.getItem('details'))
@@ -505,7 +710,7 @@ myApp.controller('details', function($scope,$http,$window) {
 
 
 var Appl = angular.module("Appl",["ngWizard"]);
-Appl.controller('checkInPage', function($scope,$http,$window){
+    Appl.controller('checkInPage', function($scope,$http,$window){
 
 
     $scope.range = function(min, max, step) {
@@ -520,6 +725,7 @@ Appl.controller('checkInPage', function($scope,$http,$window){
 
     $scope.reservation= JSON.parse($window.localStorage.getItem('reservation'))
     console.log($scope.reservation);
+    
     $http.get('/account/getListHotel').then(function(hotel){
 
         $scope.hotels=hotel.data;

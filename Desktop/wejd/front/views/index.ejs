@@ -70,8 +70,17 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li  class="active"><a href="/">Home</a></li>
-           <li ng-if="connectedUser != null || connectedUser != undefined"><a href="#">{{connectedUser.email}}</a></li>
-
+           <li  class=""><a href="/list">Book</a></li>
+       
+            <li ng-if="connectedUser.email == null  || connectedUser == undefined"><a href="/login">Log In</a></li>
+							  <li class="dropdown" ng-if="connectedUser != null || connectedUser != undefined">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{connectedUser.email}} <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href='/profile'>Profile</a></li>
+									<li><a ng-click='logout()'>Log Out</a></li>
+								
+								</ul>
+							</li>
         </ul>
       </div><!-- /.navbar-collapse -->
       <div class="mg-search-box-cont pull-right">
